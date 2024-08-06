@@ -4,18 +4,21 @@ import json
 import threading
 import time
 from datetime import datetime
-import curl_cffi.requests as cffirequests  # 使用curl_cffi.requests
+import curl_cffi.requests as cffirequests
 
 num_requests = 1  # 请求数量
 interval_ms = 800  # 间隔时间, 毫秒
 acid = "1816854086004391938"  # 活动id
-ackl = "茉莉奶绿 白月光"  # 口令
+ackl = "茉莉奶绿销量突破3000万杯"  # 口令
 authorizations = [
-    ''
+    ''#token
 ]
 
 def get_signature(url):
-    result = subprocess.run(['node', 'signature.js', url], capture_output=True, text=True)
+    print(f'获取1286: {url}')
+    # 修改命令行参数，以适应新的 JavaScript 函数
+    command = ['node', 'signature2.js', url]
+    result = subprocess.run(command, capture_output=True, text=True)
     signature = result.stdout.strip()  # 获取返回值并去掉首尾空白
     return signature
 
@@ -32,7 +35,7 @@ def getSign(d):
 url = 'https://mxsa.mxbc.net/api/v1/h5/marketing/secretword/confirm'
 
 def get_proxies():
-    # 快代理获取代理
+    #这里使用的是快代理
     api_url = ""
     proxy_ip = cffirequests.get(api_url).text.strip()  # 获取代理IP
     username = ""
@@ -58,7 +61,9 @@ def make_request(authorization, index, _, proxies):
         }
         payload['sign'] = getSign(payload)
 
-        type_value = get_signature(json.dumps(payload))  # 将payload转换为JSON字符串
+        # 修改payload为字符串形式，并确保它与JavaScript函数的输入相匹配
+        payload_str = f"{url}{json.dumps(payload)}"
+        type_value = get_signature(payload_str)  # 将payload转换为JSON字符串
         complete_url = f"{url}?type__1286={type_value}"
 
         # Debug output
