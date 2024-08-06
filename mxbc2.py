@@ -19,7 +19,7 @@ authorizations = [
 successful_accounts = set()  # 全局变量
 
 def get_signature(url):
-    command = ['node', 'signature2.js', url]
+    command = ['node', 'signature.js', url]
     result = subprocess.run(command, capture_output=True, text=True)
     signature = result.stdout.strip()  # 获取返回值并去掉首尾空白
     return signature
