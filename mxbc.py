@@ -17,7 +17,7 @@ authorizations = [
 def get_signature(url):
     print(f'获取1286: {url}')
     # 修改命令行参数，以适应新的 JavaScript 函数
-    command = ['node', 'signature2.js', url]
+    command = ['node', 'signature.js', url]
     result = subprocess.run(command, capture_output=True, text=True)
     signature = result.stdout.strip()  # 获取返回值并去掉首尾空白
     return signature
